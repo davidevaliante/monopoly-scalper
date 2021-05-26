@@ -4,7 +4,7 @@ import { parse, Node, HTMLElement } from 'node-html-parser';
 import puppeteer from 'puppeteer'
 import cron from 'node-cron'
 import { scrapStats, scrapTable } from './data/scraping';
-import { pushRows } from './data/push'
+import { pushRows, pushTable } from './data/push'
 import { asyncForEach } from './utils/utils'
 import { createEmptyLowTierDiceTable, DiceRollRow, DiceTable } from './models/DiceTable'
 
@@ -27,15 +27,15 @@ const scrap = async (browser : puppeteer.Browser) => {
     const tableRows = root.querySelectorAll('#spin-history')[0].querySelector('tbody').childNodes
 
     const formattedRows = await scrapTable(tableRows, browser)  
-    console.log(formattedRows)
+
 
     const tables = await Promise.all([scrapLowDiceRollsTable(root), scrapMidDiceRollsTable(root), scrapHighDiceRollsTable(root)])
 
     const lowTable = tables.find((it : DiceTable) => it.type === 'low')
     const midTable = tables.find((it : DiceTable) => it.type === 'mid')
     const highTable = tables.find((it : DiceTable) => it.type === 'high')
-    
-    console.log(formattedRows)
+
+    pushTable(lowTable, midTable, highTable)
     pushRows(formattedRows)
 }
 

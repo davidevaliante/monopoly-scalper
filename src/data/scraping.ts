@@ -8,8 +8,6 @@ import { spinResultImageNameToSymbol } from './../utils/utils';
 export const scrapTable = async (tableRows : Node[], browser : puppeteer.Browser) : Promise<Spin[]> => {
     const formattedRows : Spin[] = []
 
-    console.log(tableRows.length)
-
     await asyncForEach(tableRows, async (row : any , rowIndex : number) => {
         const newSpin : Spin =  buildEmptySpin() 
 
@@ -109,15 +107,8 @@ export const scrapTable = async (tableRows : Node[], browser : puppeteer.Browser
             }
         })
 
-        // // same slot and spin result
-        // if(newSpin.slotResultSymbol.toString() === newSpin.spinResultSymbol.toString()){
-        //     console.log(newSpin.slotResultSymbol.toString(), newSpin.spinResultSymbol.toString())
-        //     newSpin.sameSlotAndSpinResult = true
-        // }
-
         newSpin._id = `${newSpin.timeOfSpin}-${newSpin.totalWinners}-${newSpin.totalPayout}`
         formattedRows.push(newSpin)
-        // console.log(formattedRows)
     })
 
     return formattedRows
