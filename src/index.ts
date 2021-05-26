@@ -34,6 +34,7 @@ const scrap = async (browser : puppeteer.Browser) => {
     const lowTable = tables.find((it : DiceTable) => it.type === 'low')
     const midTable = tables.find((it : DiceTable) => it.type === 'mid')
     const highTable = tables.find((it : DiceTable) => it.type === 'high')
+    
     console.log(formattedRows)
     pushRows(formattedRows)
 }
