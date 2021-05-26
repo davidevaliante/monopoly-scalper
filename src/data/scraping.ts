@@ -11,11 +11,9 @@ export const scrapTable = async (tableRows : Node[], browser : puppeteer.Browser
     console.log(tableRows.length)
 
     await asyncForEach(tableRows, async (row : any , rowIndex : number) => {
-        console.log(`extracting from row ${rowIndex}`)
         const newSpin : Spin =  buildEmptySpin() 
 
         await asyncForEach(row.childNodes, async (cell : Node, index : number) => {
-            console.log(index)
             // Occured At
             if(index == 0){
                 const rawDate = cell.textContent.trim()
