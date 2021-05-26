@@ -34,7 +34,7 @@ const scrap = async (browser : puppeteer.Browser) => {
     const lowTable = tables.find((it : DiceTable) => it.type === 'low')
     const midTable = tables.find((it : DiceTable) => it.type === 'mid')
     const highTable = tables.find((it : DiceTable) => it.type === 'high')
-
+    console.log(formattedRows)
     pushRows(formattedRows)
 }
 
@@ -164,13 +164,13 @@ app.listen(PORT, async ()  => {
     process.on('warning', e => console.warn(e.stack))
 
     puppeteer.launch(options).then(browser => {
-        scrap(browser)
+        // scrap(browser)
 
-        // cron.schedule('*/10 * * * * *', async () => {
-        //     console.log(`Scraping Count ${scrapingCount}`)
-        //     scrapingCount++
-        //     await scrap(browser)
-        // })
+        cron.schedule('*/10 * * * * *', async () => {
+            console.log(`Scraping Count ${scrapingCount}`)
+            scrapingCount++
+            await scrap(browser)
+        })
     })
 })
 
