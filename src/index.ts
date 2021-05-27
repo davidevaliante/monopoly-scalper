@@ -40,7 +40,8 @@ const scrap = async (browser : puppeteer.Browser) => {
 }
 
 const scrapLowDiceRollsTable = async (root : HTMLElement) => {
-    const lowTierDiceRollsTBody = root.querySelectorAll('#__BVID__210')[0].childNodes[0]
+    const lowTierDiceRollsTBody = root.querySelectorAll('.dice-table')[0].childNodes[0]
+
     const listOfRows = lowTierDiceRollsTBody.childNodes.filter((it : any) => it.rawTagName === 'tr')
 
     const rows : DiceRollRow[] = []
@@ -78,7 +79,7 @@ const scrapLowDiceRollsTable = async (root : HTMLElement) => {
 }
 
 const scrapMidDiceRollsTable = async (root : HTMLElement) => {
-    const midTierDiceRollsTBody = root.querySelectorAll('#__BVID__232')[0].childNodes[0]
+    const midTierDiceRollsTBody = root.querySelectorAll('.dice-table')[1].childNodes[0]
     const listOfRows = midTierDiceRollsTBody.childNodes.filter((it : any) => it.rawTagName === 'tr')
         
 
@@ -116,7 +117,7 @@ const scrapMidDiceRollsTable = async (root : HTMLElement) => {
 }
 
 const scrapHighDiceRollsTable = async (root : HTMLElement) => {
-    const midTierDiceRollsTBody = root.querySelectorAll('#__BVID__254')[0].childNodes[0]
+    const midTierDiceRollsTBody = root.querySelectorAll('.dice-table')[2].childNodes[0]
     const listOfRows = midTierDiceRollsTBody.childNodes.filter((it : any) => it.rawTagName === 'tr')
         
 
