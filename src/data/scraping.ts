@@ -7,9 +7,12 @@ import { spinResultImageNameToSymbol } from './../utils/utils';
 
 export const scrapTable = async (tableRows : Node[], browser : puppeteer.Browser) : Promise<Spin[]> => {
     const formattedRows : Spin[] = []
+    // console.log(tableRows[0].childNodes[4].childNodes[0].rawText)
 
     await asyncForEach(tableRows, async (row : any , rowIndex : number) => {
         const newSpin : Spin =  buildEmptySpin() 
+
+
 
         await asyncForEach(row.childNodes, async (cell : Node, index : number) => {
             // Occured At
@@ -52,23 +55,27 @@ export const scrapTable = async (tableRows : Node[], browser : puppeteer.Browser
                 const fifthCell = cell
                 const chanceMultiplierValue = fifthCell.childNodes[0].rawText.trim()
                 newSpin.chanceMultiplier = chanceMultiplierValue
-                // console.log(totalPayout)
+
             }
 
             // Total Winners
             if(index == 5){
                 const sixthCell = cell
-                const totalWinnersValue = parseInt(sixthCell.childNodes[0].rawText.trim().replace(',', '').replace('€', ''))
-                newSpin.totalWinners = totalWinnersValue
-                // console.log(totalPayout)
+                if(newSpin.chanceMultiplier === ''){
+                    const totalWinnersValue = parseInt(sixthCell.childNodes[0].rawText.trim().replace(',', '').replace('€', ''))
+                    newSpin.totalWinners = totalWinnersValue
+                }
+
+                // console.log(totalWinnersValue)
             }
 
             // Total Payout
             if(index == 6){
                 const seventhCell = cell
-                const totalPayout = parseInt(seventhCell.childNodes[0].rawText.trim().replace(',', '').replace('€', ''))
-                newSpin.totalPayout = totalPayout
-                // console.log(totalPayout)
+                if(newSpin.chanceMultiplier === ''){
+                    const totalPayout = parseInt(seventhCell.childNodes[0].rawText.trim().replace(',', '').replace('€', ''))
+                    newSpin.totalPayout = totalPayout
+                }
             }
 
             // Watch Video
@@ -111,6 +118,7 @@ export const scrapTable = async (tableRows : Node[], browser : puppeteer.Browser
         formattedRows.push(newSpin)
     })
 
+    console.log('done')
     return formattedRows
 }
 

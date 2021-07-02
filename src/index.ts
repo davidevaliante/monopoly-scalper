@@ -27,7 +27,7 @@ const scrap = async (browser : puppeteer.Browser) => {
     const tableRows = root.querySelectorAll('#spin-history')[0].querySelector('tbody').childNodes
 
     const formattedRows = await scrapTable(tableRows, browser)  
-
+    console.log(formattedRows)
 
     const tables = await Promise.all([scrapLowDiceRollsTable(root), scrapMidDiceRollsTable(root), scrapHighDiceRollsTable(root)])
 
