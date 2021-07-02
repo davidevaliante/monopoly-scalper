@@ -9,8 +9,8 @@ const API_ROOT = 'https://monopoly.spike-realtime-api.eu/api'
 
 
 export const pushRows = async (rows : Spin[]) => {
-    console.log(rows)
-    // const write = await axios.post(`${API_ROOT}/write-spins`, rows)
+    // console.log(rows)
+    const write = await axios.post(`${API_ROOT}/write-spins`, rows)
 
     // console.log(write.data)
 
